@@ -1,23 +1,26 @@
 const express = require("express");
-const { mongoose } = require("mongoose");
-const connectDB  = require("./config/db");
-const albums = require("./config/seeds/albums");
-const seedAlbums = require("./config/seeds/seedAlbums");
+const albumsRouter = require('./routes/albums');
+const connectDB = require("./config/db");
 require('dotenv').config()
 
 const app = express()
-
-const PORT = process.env.PORT || 4000
+app.use(express.json())
 
 connectDB()
-    // .then(() => {
-    //     seedAlbums()
-    //     console.log('ya opero la funcion seedAlbums()')
-    // })
-    // .catch((error) => console.log('fallo la conexion o el seeding',error))
+
+app.use('/albums', albumsRouter)
+
+app.use('*', (req, res) => {
+    res.status(404).json({data: 'Not found'})
+})
+
+app.use((error, req, res, next) => {
+    console.error(error);
+    res.status(500).json({data: 'Internal server error'})
+})
+
+const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 })
-
-
