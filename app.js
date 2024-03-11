@@ -10,13 +10,20 @@ connectDB()
 
 app.use('/albums', albumsRouter)
 
-app.use('*', (req, res) => {
-    res.status(404).json({data: 'Not found'})
+app.all('*', async (req, res, next) => {
+    const err = new Error(`Error, not found`)
+    err.status = 'fail'
+    err.statusCode = 404
+    next(err)
 })
 
-app.use((error, req, res, next) => {
-    console.error(error);
-    res.status(500).json({data: 'Internal server error'})
+app.use(async (error, req, res, next) => {
+    error.statusCode = error.statusCode || 500;
+    error.status == error.status || 'error'
+    res.status(error.statusCode).json({
+        status: error.statusCode,
+        message: error.message
+    })
 })
 
 const PORT = process.env.PORT || 4000
