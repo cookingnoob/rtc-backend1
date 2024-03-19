@@ -7,7 +7,11 @@ const albumSchema = new mongoose.Schema({
         type: String
     }],
     year: Number
-})
+    }, {
+        timestamps: true,
+        collection:'albums'
+    }
+)
 
 const Album = mongoose.model('Album', albumSchema)
 

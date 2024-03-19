@@ -1,13 +1,14 @@
 const express = require("express");
 const albumsRouter = require('./routes/albums');
 const connectDB = require("./config/db");
+const seedAlbums = require("./config/seeds/seedAlbums");
 require('dotenv').config()
 
 const app = express()
 app.use(express.json())
 
 connectDB()
-
+// seedAlbums()
 app.use('/albums', albumsRouter)
 
 app.all('*', async (req, res, next) => {
