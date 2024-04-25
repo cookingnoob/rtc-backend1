@@ -9,7 +9,7 @@ router.get('/:id', getAlbumByID)
 
 router.post('/create', addAlbum)
 
-router.put('/edit/:id', changeAlbum)
+router.patch('/edit/:id', changeAlbum)
 
 router.delete('/delete/:id', deleteAlbum)
 

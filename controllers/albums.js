@@ -37,11 +37,10 @@ const addAlbum = async (req, res, next) => {
 
 const changeAlbum = async (req, res, next) => {
     const {id} = req.params;
-    const {title, artist, songs, year} = req.body
     try{
         const updatedAlbum = await Album.findByIdAndUpdate(
             id,
-            {title, artist, songs, year},
+            req.body,
             {new: true, runValidators: true}
         )
         res.status(200).json({ data: updatedAlbum });
