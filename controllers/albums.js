@@ -52,7 +52,7 @@ const changeAlbum = async (req, res, next) => {
 const deleteAlbum = async (req, res, next) => {
     const {id} = req.params
     try{
-        await Album.deleteOne({_id: id})
+        await Album.findByIdAndDelete(id)
         res.status(200).json({data: 'Ok Album eliminado'})
     }catch (error){
         next(error)
